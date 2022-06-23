@@ -15,7 +15,6 @@ ADD https://bitcoin.org/bin/bitcoin-core-${BITCOIN_CORE_VERSION}/SHA256SUMS.asc 
 ADD https://bitcoincore.org/bin/bitcoin-core-22.0/SHA256SUMS ./
 
 
-# FROM docker.io/frolvlad/alpine-glibc:alpine-3.16_glibc-2.35
 FROM docker.io/alpine:3.16 as main
 
 # Set the default Bitcoin-core version and add ability to be modified externally when building the image.
@@ -30,13 +29,10 @@ COPY --from=base SHA256SUMS.asc ./SHA256SUMS.asc
 COPY --from=base SHA256SUMS ./SHA256SUMS
 
 # Set environment variables so the values are available for future running containers.
-ENV GLIBC_VERSION=2.35-r0
-ENV LANG=C.UTF-8
+ARG GLIBC_VERSION=2.35-r0
 
 RUN apk update && \
     apk --no-cache add wget gnupg && \
-    # adduser -u 1001 -g 1001 --gecos '' --disabled-password bitcoin && \
-    # chown -R bitcoin:bitcoin /home/bitcoin/ && \
     wget -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-bin-${GLIBC_VERSION}.apk && \
@@ -44,14 +40,6 @@ RUN apk update && \
     # Install the glib-c packages
     apk --no-cache add glibc-${GLIBC_VERSION}.apk glibc-bin-${GLIBC_VERSION}.apk && \
     apk --no-cache add glibc-i18n-${GLIBC_VERSION}.apk && \
-    # Cleanup (cleanup now to release mem)
-    rm -rf glibc-${GLIBC_VERSION}.apk && \
-    rm -rf glibc-bin-${GLIBC_VERSION}.apk && \
-    rm -rf glibc-i18n-${GLIBC_VERSION}.apk && \
-    (/usr/glibc-compat/bin/localedef --force --inputfile POSIX --charmap UTF-8 "$LANG" || true)  && \
-    rm /var/cache/apk/* && \
-    echo "export LANG=$LANG" > /etc/profile.d/locale.sh && \
-    # apk del glibc-i18n wget && \
     # Download Wladimir J. van der Laan’s releases key for version 11.0 or later
     gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys ${RELASE_KEY} && \
     # Verify the checksum is signed with Wladimir J. van der Laan’s releases key
@@ -69,12 +57,22 @@ COPY --from=main /usr/lib/libgcc_s.so.1 /usr/lib/libgcc_s.so.1
 COPY --from=main /lib/ld-musl-x86_64.so.1 /lib/ld-musl-x86_64.so.1
 COPY --from=main /lib/libc.musl-x86_64.so.1 /lib/libc.musl-x86_64.so.1
 
-# RUN mkdir /opt/bitcoin-core/.bitcoin
-
 WORKDIR "/opt/bitcoin-core"
 
 # From now on execute as bitcoin user.
-# USER bitcoin
+USER nonroot
 
-# Using CMD since we are ignoring modifiers
-CMD ["/usr/glibc-compat/lib/ld-linux-x86-64.so.2", "/opt/bitcoin-core/bin/bitcoind"]
+# REST interface
+EXPOSE 8080
+
+# P2P network (mainnet, testnet & regnet respectively)
+EXPOSE 8333 18333 18444
+
+# RPC interface (mainnet, testnet & regnet respectively)
+EXPOSE 8332 18332 18443
+
+# ZMQ ports (for transactions & blocks respectively)
+EXPOSE 28332 28333
+
+# Using CMD since we are ignoring 
+CMD ["/usr/glibc-compat/lib/ld-linux-x86-64.so.2", "/opt/bitcoin-core/bin/bitcoind", "-zmqpubrawblock=tcp://0.0.0.0:28332", "-zmqpubrawtx=tcp://0.0.0.0:28333"]
