@@ -47,4 +47,5 @@ spec:
         resources:
           requests:
             storage: 8Gi # 7Gi are required to run
-        storageClassName: do-block-storage # using the standar class by DigitalOcean
+        # storageClassName: do-block-storage # using the standar class by DigitalOcean
+        storageClassName: standard # StorageClassName for Kind
