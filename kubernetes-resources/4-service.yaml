@@ -36,4 +36,4 @@ spec:
       targetPort: 28333
   clusterIP: None
   selector:
-    app: bitcoin
+    app: bitcoin-core

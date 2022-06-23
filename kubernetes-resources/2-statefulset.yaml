@@ -33,9 +33,10 @@ spec:
               mountPath: "/home/nonroot/"
           resources:
             requests:
+              cpu: 500m
               memory: 2.5Gi
             limits:
-              # CPU Limit are better handled by the OS
+              cpu: 3000m # CPU Limit are better handled by the OS
               memory: 2.5Gi
   volumeClaimTemplates:
     - metadata:
