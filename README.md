@@ -5,3 +5,12 @@ This is demo repo of running bitcon-core as a service
 https://github.com/kylemanna/docker-bitcoind/blob/master/Dockerfile
 https://github.com/lncm/docker-bitcoind/blob/master/23.0/Dockerfile
 https://github.com/FelixWeis/docker-bitcoind/blob/master/0.15/Dockerfile
+https://github.com/anchore
+
+### Scanners
+
+ curl -s https://ci-tools.anchore.io/inline_scan-v0.10.2 | bash -s -- -p docker.io/thanosgkara/bitcoin-core-service:22.0
+
+ /tmp/grype docker.io/thanosgkara/bitcoin-core-service:22.0
+
+ 
