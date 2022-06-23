@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: bitcoin-core
+  name: bitcoin
+  labels: &bitcoin-labels
+    app: bitcoin-core
+    component: daemon
+    version: '22.0'
+spec:
+  selector:
+    matchLabels: *bitcoin-labels
+  serviceName: bitcoin-core
+  replicas: 1
+  template:
+    metadata:
+      labels: *bitcoin-labels
+    spec:
+      serviceAccountName: bitcoin-core
+      securityContext: # Distroless:nonroot uid:gid
+        runAsUser: 65532
+        fsGroup: 65532
+      dnsConfig:
+        options:
+          - name: ndots # syscall will try to resolve an absolute name
+            value: "1"
+      containers:
+        - name: bitcoind
+          image: docker.io/thanosgkara/bitcoin-core-service:22.0
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: host-pvc
+              mountPath: "/home/nonroot/"
+          resources:
+            requests:
+              memory: 512Mi
+            limits:
+              # CPU Limit are better handled by the OS
+              memory: 2Gi
+  volumeClaimTemplates:
+    - metadata:
+        name: host-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 8Gi # 7Gi are required to run
+        storageClassName: do-block-storage # using the standar class by DigitalOcean

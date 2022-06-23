@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: bitcoin-core
+  name: bitcoin-core
+  labels:
+    app: bitcoin-core
+spec:
+  ports:
+    - port: 8080
+      name: rest-interface
+      targetPort: 8080
+    - port: 8333
+      name: p2p-maninet
+      targetPort: 8333
+    - port: 18333
+      name: p2p-testnet
+      targetPort: 18333
+    - port: 18444
+      name: p2p-regnet
+      targetPort: 18444
+    - port: 8332
+      name: rpc-maninet
+      targetPort: 8332
+    - port: 18332
+      name: rpc-testnet
+      targetPort: 18332
+    - port: 18443
+      name: rpc-regnet
+      targetPort: 18443
+    - port: 28332
+      name: zmq-transactions
+      targetPort: 28332
+    - port: 28333
+      name: zmq-blocks
+      targetPort: 28333
+  clusterIP: None
+  selector:
+    app: bitcoin
