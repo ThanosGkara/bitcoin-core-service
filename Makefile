@@ -8,6 +8,7 @@ help:
 	@echo "  build-image         to build the app container image."
 	@echo "  run-image           to run the app container."
 	@echo "  image-scan  		 to run the Anchore container image security test."
+	@echo "  image-push          to push image to DockerHub"
 	@echo "  deploy-to-kind      to create a new Kind cluster."
 	@echo "  kind-delete         to delete the Kind cluster."
 	@echo "  script-kiddies		 script to count ip frequency in a log file"
