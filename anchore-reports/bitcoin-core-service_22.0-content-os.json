@@ -1,0 +1,55 @@
+{
+    "content": [
+        {
+            "cpes": [
+                "cpe:2.3:a:base-files:base-files:11.1+deb11u3:*:*:*:*:*:*:*",
+                "cpe:2.3:a:base_files:base-files:11.1+deb11u3:*:*:*:*:*:*:*",
+                "cpe:2.3:a:base-files:base_files:11.1+deb11u3:*:*:*:*:*:*:*",
+                "cpe:2.3:a:base_files:base_files:11.1+deb11u3:*:*:*:*:*:*:*",
+                "cpe:2.3:a:*:base-files:11.1+deb11u3:*:*:*:*:*:*:*",
+                "cpe:2.3:a:*:base_files:11.1+deb11u3:*:*:*:*:*:*:*"
+            ],
+            "license": "GPL",
+            "licenses": [
+                "GPL"
+            ],
+            "origin": "Santiago Vila <sanvila@debian.org> (maintainer)",
+            "package": "base-files",
+            "size": "340000",
+            "type": "dpkg",
+            "version": "11.1+deb11u3"
+        },
+        {
+            "cpes": [
+                "cpe:2.3:a:netbase:netbase:6.3:*:*:*:*:*:*:*",
+                "cpe:2.3:a:*:netbase:6.3:*:*:*:*:*:*:*"
+            ],
+            "license": "GPL-2",
+            "licenses": [
+                "GPL-2"
+            ],
+            "origin": "Marco d'Itri <md@linux.it> (maintainer)",
+            "package": "netbase",
+            "size": "41000",
+            "type": "dpkg",
+            "version": "6.3"
+        },
+        {
+            "cpes": [
+                "cpe:2.3:a:tzdata:tzdata:2021a-1+deb11u4:*:*:*:*:*:*:*",
+                "cpe:2.3:a:*:tzdata:2021a-1+deb11u4:*:*:*:*:*:*:*"
+            ],
+            "license": "Unknown",
+            "licenses": [
+                "Unknown"
+            ],
+            "origin": "GNU Libc Maintainers <debian-glibc@lists.debian.org> (maintainer)",
+            "package": "tzdata",
+            "size": "3409000",
+            "type": "dpkg",
+            "version": "2021a-1+deb11u4"
+        }
+    ],
+    "content_type": "os",
+    "imageDigest": "sha256:88f2ac740ba8f8f6d1872975566064a38a50471456e70148a01c63f6c03f78aa"
+}
