@@ -13,4 +13,5 @@ https://github.com/anchore
 
  /tmp/grype docker.io/thanosgkara/bitcoin-core-service:22.0
 
- 
+ # kind
+ https://github.com/kubernetes-sigs/kind/blob/main/site/content/docs/user/kind-example-config.yaml
