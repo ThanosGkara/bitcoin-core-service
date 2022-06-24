@@ -21,11 +21,11 @@ declare -A ip_freq
 
 for line in $(cat $1 | cut -d " " -f2)
 do
+    if [ -v ip_freq[$line] ]; then
+        ip_freq[$line]=$((ip_freq[$line] + 1))
+    fi
     if [ ! -v ip_freq[$line] ]; then
         ip_freq[$line]=1
-    fi
-    if [ -v ip_freq[$line] ]; then
-        ip_freq[$line]=$(expr ${ip_freq[$line]} + 1)
     fi
 done
 
