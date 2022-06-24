@@ -43,7 +43,7 @@ script-grownups:
 
 
 revert-all:
-	-kind delete cluster --name ${PROJECT}-k8s-cluster
+	-kind delete cluster --name bitcoin-k8s-cluster
 	-docker rm $(shell docker stop $(shell docker ps -a -q --filter ancestor=${DOCKER_IMAGE} --format="{{.ID}}"))
 	-docker rmi $(shell docker images '${DOCKER_IMAGE}' -a -q)
 	-docker rm $(shell docker stop $(shell docker ps -a -q --filter ancestor=anchore/inline-scan --format="{{.ID}}"))
