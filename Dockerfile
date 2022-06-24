@@ -11,7 +11,6 @@ RUN apk update && \
     apk --no-cache add wget && \
     wget https://bitcoin.org/bin/bitcoin-core-${BITCOIN_CORE_VERSION}/bitcoin-${BITCOIN_CORE_VERSION}-${ARCHITECTURE}-linux-gnu.tar.gz
 
-ADD https://bitcoin.org/bin/bitcoin-core-${BITCOIN_CORE_VERSION}/SHA256SUMS.asc ./
 ADD https://bitcoincore.org/bin/bitcoin-core-22.0/SHA256SUMS ./
 
 
@@ -25,7 +24,6 @@ ARG ARCHITECTURE="x86_64"
 ARG RELASE_KEY=71A3B16735405025D447E8F274810B012346C9A6
 
 COPY --from=base bitcoin-${BITCOIN_CORE_VERSION}-${ARCHITECTURE}-linux-gnu.tar.gz ./bitcoin-${BITCOIN_CORE_VERSION}-${ARCHITECTURE}-linux-gnu.tar.gz
-COPY --from=base SHA256SUMS.asc ./SHA256SUMS.asc
 COPY --from=base SHA256SUMS ./SHA256SUMS
 
 # Set environment variables so the values are available for future running containers.
