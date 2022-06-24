@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Oneliner equivalent to this script
+# cat sample-web-log.log | cut -d " " -f2 | sort | uniq -c | sort -nr 
+
 ## Exit on any error
 set -e
 
