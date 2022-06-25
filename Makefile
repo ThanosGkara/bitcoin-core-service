@@ -29,7 +29,6 @@ image-scan:
 image-push:
 	docker push ${DOCKER_IMAGE}
 
-
 deploy-to-kind:
 	kind create cluster --name bitcoin-k8s-cluster --image docker.io/kindest/node:v1.24.2 --config=kind-resources/kind-cluster-config.yaml
 	kubectl cluster-info --context kind-bitcoin-k8s-cluster
