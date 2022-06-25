@@ -47,7 +47,8 @@ RUN apk update && \
 
 # For the final container we use Google's Distroless container
 FROM gcr.io/distroless/static:nonroot as final
-# Copy all the necessary files to run our service
+
+# Copy all the necessary files to run our service under distroless
 COPY --from=builder /opt/bitcoin-core /opt/bitcoin-core
 COPY --from=builder /usr/glibc-compat /usr/glibc-compat
 COPY --from=builder /usr/lib/libgcc_s.so.1 /usr/lib/libgcc_s.so.1
