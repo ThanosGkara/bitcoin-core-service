@@ -1,5 +1,5 @@
 NAME = bitcoin-core-service
-DOCKER_IMAGE_NAME = docker.io/thanosgkara/${NAME}
+DOCKER_IMAGE_NAME = thanosgkara/${NAME}
 VERSION = 22.0
 DOCKER_IMAGE=${DOCKER_IMAGE_NAME}:${VERSION}
 
