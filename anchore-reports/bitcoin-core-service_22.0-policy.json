@@ -273,13 +273,13 @@
                                     }
                                 ]
                             },
-                            "created_at": 1656113065,
+                            "created_at": 1656187422,
                             "evaluation_problems": [],
                             "final_action": "warn",
                             "final_action_reason": "policy_evaluation",
                             "image_digest": "sha256:88f2ac740ba8f8f6d1872975566064a38a50471456e70148a01c63f6c03f78aa",
                             "image_id": "30fbc0679a38e8307a033912d15ea9c9adeb27101528825af3fde4253a9f8c6e",
-                            "last_modified": 1656113065,
+                            "last_modified": 1656187422,
                             "matched_blacklisted_images_rule": false,
                             "matched_mapping_rule": {
                                 "id": "c4f9bf74-dc38-4ddf-b5cf-00e9c0074611",
@@ -348,7 +348,7 @@
                             "user_id": "admin"
                         }
                     },
-                    "last_evaluation": "2022-06-24T23:24:25Z",
+                    "last_evaluation": "2022-06-25T20:03:42Z",
                     "policyId": "2c53a13c-1765-11e8-82ef-23527761d060",
                     "status": "pass"
                 }

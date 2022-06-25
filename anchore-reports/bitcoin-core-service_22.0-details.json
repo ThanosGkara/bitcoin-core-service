@@ -1,9 +1,9 @@
 [
     {
         "analysis_status": "analyzed",
-        "analyzed_at": "2022-06-24T23:24:18Z",
+        "analyzed_at": "2022-06-25T20:03:33Z",
         "annotations": {},
-        "created_at": "2022-06-24T23:24:03Z",
+        "created_at": "2022-06-25T20:03:16Z",
         "imageDigest": "sha256:88f2ac740ba8f8f6d1872975566064a38a50471456e70148a01c63f6c03f78aa",
         "image_content": {
             "metadata": {
@@ -17,24 +17,24 @@
         },
         "image_detail": [
             {
-                "created_at": "2022-06-24T23:24:03Z",
+                "created_at": "2022-06-25T20:03:16Z",
                 "digest": "sha256:88f2ac740ba8f8f6d1872975566064a38a50471456e70148a01c63f6c03f78aa",
                 "dockerfile": "RlJPTSBzY3JhdGNoClJVTiBiYXplbCBidWlsZCAuLi4KQ09QWSBkaXI6YzQyNmY3MGZmYTcwNDBhYjZhN2Q4NWZkNjcyNjA3ZjA1ZTUyOGYxNGI1ZGFjNDk3ZTEzODY0ODgwYjFhOGFjZiBpbiAvb3B0L2JpdGNvaW4tY29yZSAKQ09QWSBkaXI6ZWEwYTU1MTdkMTMyMDhiZDBlMTE5ODFiOWQyZmI1MTU1Zjc5OTdmMjFjM2MwODk1MDFhODdjNWU3MDc1NWI2YiBpbiAvdXNyL2dsaWJjLWNvbXBhdCAKQ09QWSBmaWxlOjY1ODZhMjI5Yzk0N2YzZTE3YWRiZGEwYjdlYzMwNDBhOWFkMDU0MTY3MGRhYWExNzU1MjFiZjRlNmM5MjI2ZjAgaW4gL3Vzci9saWIvbGliZ2NjX3Muc28uMSAKQ09QWSBmaWxlOjEwNGNiNWQzNjA4MjQ1ZDgxMTMxZDVjNmYyYTBhYTJlNGU1OTVlN2E0NTBjYjdiYWJmODc4MTZlMjZlOGJiMGEgaW4gL2xpYi9sZC1tdXNsLXg4Nl82NC5zby4xIApDT1BZIGZpbGU6MTA0Y2I1ZDM2MDgyNDVkODExMzFkNWM2ZjJhMGFhMmU0ZTU5NWU3YTQ1MGNiN2JhYmY4NzgxNmUyNmU4YmIwYSBpbiAvbGliL2xpYmMubXVzbC14ODZfNjQuc28uMSAKV09SS0RJUiAvb3B0L2JpdGNvaW4tY29yZQpVU0VSIG5vbnJvb3QKRVhQT1NFIDgwODAKRVhQT1NFIDE4MzMzIDE4NDQ0IDgzMzMKRVhQT1NFIDE4MzMyIDE4NDQzIDgzMzIKRVhQT1NFIDI4MzMyIDI4MzMzCkNNRCBbIi91c3IvZ2xpYmMtY29tcGF0L2xpYi9sZC1saW51eC14ODYtNjQuc28uMiIgIi9vcHQvYml0Y29pbi1jb3JlL2Jpbi9iaXRjb2luZCIgIi16bXFwdWJyYXdibG9jaz10Y3A6Ly8wLjAuMC4wOjI4MzMyIiAiLXptcXB1YnJhd3R4PXRjcDovLzAuMC4wLjA6MjgzMzMiXQo=",
                 "fulldigest": "localhost:5000/bitcoin-core-service@sha256:88f2ac740ba8f8f6d1872975566064a38a50471456e70148a01c63f6c03f78aa",
                 "fulltag": "localhost:5000/bitcoin-core-service:22.0",
                 "imageDigest": "sha256:88f2ac740ba8f8f6d1872975566064a38a50471456e70148a01c63f6c03f78aa",
                 "imageId": "30fbc0679a38e8307a033912d15ea9c9adeb27101528825af3fde4253a9f8c6e",
-                "last_updated": "2022-06-24T23:24:18Z",
+                "last_updated": "2022-06-25T20:03:33Z",
                 "registry": "localhost:5000",
                 "repo": "bitcoin-core-service",
                 "tag": "22.0",
-                "tag_detected_at": "2022-06-24T23:24:03Z",
+                "tag_detected_at": "2022-06-25T20:03:16Z",
                 "userId": "admin"
             }
         ],
         "image_status": "active",
         "image_type": "docker",
-        "last_updated": "2022-06-24T23:24:18Z",
+        "last_updated": "2022-06-25T20:03:33Z",
         "parentDigest": "sha256:88f2ac740ba8f8f6d1872975566064a38a50471456e70148a01c63f6c03f78aa",
         "userId": "admin"
     }
