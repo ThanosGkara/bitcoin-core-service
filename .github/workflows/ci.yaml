@@ -1,5 +1,4 @@
 name: ci
-
 on:
   pull_request:
     paths:
@@ -9,7 +8,6 @@ on:
       - main
     paths:
       - "Dockerfile"
-
 jobs:  
   image-build:
     name: Build image
@@ -19,7 +17,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Run make build-image
         run: make build-image
-  
   image-scan:
     name: Anchore scan image security test
     runs-on: ubuntu-latest
@@ -30,7 +27,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Run make image-scan
         run: make image-scan
-
   image-push:
     name: Anchore scan image security test
     runs-on: ubuntu-latest
