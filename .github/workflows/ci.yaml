@@ -9,30 +9,19 @@ on:
     paths:
       - "Dockerfile"
 jobs:  
-  image-build:
-    name: Build image
+  image-build-scan:
+    name: Build image, Anchore scan image security test
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Run make build-image
-        run: make build-image
-  image-scan:
-    name: Anchore scan image security test
-    runs-on: ubuntu-latest
-    needs:
-      - image-build
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-      - name: Run make image-scan
-        run: make image-scan
+      - name: Run make build-image image-scan
+        run: make build-image image-scan
   image-push:
-    name: Anchore scan image security test
+    name: Image push
     runs-on: ubuntu-latest
     needs:
-      - image-build
-      - image-scan
+      - image-build-scan
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
@@ -42,4 +31,4 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Run make image-scan
-        run: make image-push
+        run: make build-image image-push
