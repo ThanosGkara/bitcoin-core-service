@@ -1,7 +1,7 @@
 # Set the image distro and version for base container.
 FROM docker.io/alpine:3.16 as base
 
-# Set the default Bitcoin-core version and add ability to be modified externally when building the image.
+# Set the default Bitcoin-core version
 ARG BITCOIN_CORE_VERSION=22.0
 
 # Set the desired operating system architecture
