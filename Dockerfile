@@ -1,4 +1,4 @@
-# Set the image distro and version for builder container.
+# Set the image distro and version for base container.
 FROM docker.io/alpine:3.16 as base
 
 # Set the default Bitcoin-core version and add ability to be modified externally when building the image.
@@ -10,12 +10,10 @@ ARG ARCHITECTURE="x86_64"
 RUN apk update && \
     apk --no-cache add wget && \
     wget https://bitcoin.org/bin/bitcoin-core-${BITCOIN_CORE_VERSION}/bitcoin-${BITCOIN_CORE_VERSION}-${ARCHITECTURE}-linux-gnu.tar.gz
-
 ADD https://bitcoincore.org/bin/bitcoin-core-22.0/SHA256SUMS ./
 
 
-FROM docker.io/alpine:3.16 as main
-
+FROM docker.io/alpine:3.16 as builder
 # Set the default Bitcoin-core version and add ability to be modified externally when building the image.
 ARG BITCOIN_CORE_VERSION=22.0
 # Set the desired operating system architecture
@@ -47,13 +45,14 @@ RUN apk update && \
     tar --strip-components=1 -xzf bitcoin-${BITCOIN_CORE_VERSION}-${ARCHITECTURE}-linux-gnu.tar.gz -C /opt/bitcoin-core && \
     rm bitcoin-${BITCOIN_CORE_VERSION}-${ARCHITECTURE}-linux-gnu.tar.gz
 
+# For the final container we use Google's Distroless container
 FROM gcr.io/distroless/static:nonroot as final
-
-COPY --from=main /opt/bitcoin-core /opt/bitcoin-core
-COPY --from=main /usr/glibc-compat /usr/glibc-compat
-COPY --from=main /usr/lib/libgcc_s.so.1 /usr/lib/libgcc_s.so.1
-COPY --from=main /lib/ld-musl-x86_64.so.1 /lib/ld-musl-x86_64.so.1
-COPY --from=main /lib/libc.musl-x86_64.so.1 /lib/libc.musl-x86_64.so.1
+# Copy all the necessary files to run our service
+COPY --from=builder /opt/bitcoin-core /opt/bitcoin-core
+COPY --from=builder /usr/glibc-compat /usr/glibc-compat
+COPY --from=builder /usr/lib/libgcc_s.so.1 /usr/lib/libgcc_s.so.1
+COPY --from=builder /lib/ld-musl-x86_64.so.1 /lib/ld-musl-x86_64.so.1
+COPY --from=builder /lib/libc.musl-x86_64.so.1 /lib/libc.musl-x86_64.so.1
 
 WORKDIR "/opt/bitcoin-core"
 
