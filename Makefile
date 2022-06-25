@@ -40,10 +40,12 @@ kind-delete:
 
 
 script-kiddies:
+	cat webserver-log/sample-web-log.log | cut -d " " -f2 | sort | uniq -c | sort -nr
 	cd webserver-log && ./ip-frequency.sh sample-web-log.log
 
 
 script-grownups:
+	cat webserver-log/sample-web-log.log | cut -d " " -f2 | sort | uniq -c | sort -nr
 	cd webserver-log && python3 ip-freq.py sample-web-log.log
 
 
@@ -61,6 +63,7 @@ revert-all:
 	build-image \
     run-image \
     image-scan \
+	image-push \
     deploy-to-kind \
     kind-delete \
     script-kiddies \

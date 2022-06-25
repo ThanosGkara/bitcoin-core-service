@@ -19,15 +19,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-  image-scan:
-    name: Anchore container image security test
+  image-build-scan-push:
+    name: Build, Anchore scan image security test and push
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v2
 
       - name: Run make build-image image-scan
-        run: make build-image image-scan
-      
-      - name: Push image to Dockerhub
-        run: make image-push
+        run: make build-image image-scan image-push
