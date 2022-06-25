@@ -24,7 +24,7 @@ ARG RELASE_KEY=71A3B16735405025D447E8F274810B012346C9A6
 COPY --from=base bitcoin-${BITCOIN_CORE_VERSION}-${ARCHITECTURE}-linux-gnu.tar.gz ./bitcoin-${BITCOIN_CORE_VERSION}-${ARCHITECTURE}-linux-gnu.tar.gz
 COPY --from=base SHA256SUMS ./SHA256SUMS
 
-# Set environment variables so the values are available for future running containers.
+# Set GLIBC version
 ARG GLIBC_VERSION=2.35-r0
 
 RUN apk update && \
