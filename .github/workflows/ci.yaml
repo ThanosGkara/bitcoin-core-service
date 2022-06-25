@@ -10,7 +10,7 @@ on:
       - "Dockerfile"
 jobs:  
   image-build-scan:
-    name: Build image, Anchore scan image security test
+    name: Build image and run Anchore scan image security test
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
