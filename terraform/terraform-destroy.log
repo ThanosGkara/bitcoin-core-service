@@ -1,0 +1,122 @@
+module.iam.data.aws_caller_identity.current: Reading...
+module.iam.aws_iam_group.no_permissions_group: Refreshing state... [id=dev-ci-no-permissions-group]
+module.iam.aws_iam_user.user: Refreshing state... [id=dev-ci]
+module.iam.data.aws_caller_identity.current: Read complete after 1s [id=414396067106]
+module.iam.data.aws_iam_policy_document.role_allow_assume: Reading...
+module.iam.data.aws_iam_policy_document.role_allow_assume: Read complete after 0s [id=3266886273]
+module.iam.aws_iam_role.role: Refreshing state... [id=dev-ci]
+module.iam.aws_iam_group_membership.no_permissions_group_membership: Refreshing state... [id=dev-ci-no-perms-group-membership]
+module.iam.data.aws_iam_policy_document.assume_role_policy: Reading...
+module.iam.data.aws_iam_policy_document.assume_role_policy: Read complete after 0s [id=2868227597]
+module.iam.aws_iam_group_policy.no_permissions_group_group_policy: Refreshing state... [id=dev-ci-no-permissions-group:dev-ci-group-policy]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # module.iam.aws_iam_group.no_permissions_group will be destroyed
+  - resource "aws_iam_group" "no_permissions_group" {
+      - arn       = "arn:aws:iam::414396067106:group/dev-ci-no-permissions-group" -> null
+      - id        = "dev-ci-no-permissions-group" -> null
+      - name      = "dev-ci-no-permissions-group" -> null
+      - path      = "/" -> null
+      - unique_id = "AGPAWA67OFURGWESEK4PU" -> null
+    }
+
+  # module.iam.aws_iam_group_membership.no_permissions_group_membership will be destroyed
+  - resource "aws_iam_group_membership" "no_permissions_group_membership" {
+      - group = "dev-ci-no-permissions-group" -> null
+      - id    = "dev-ci-no-perms-group-membership" -> null
+      - name  = "dev-ci-no-perms-group-membership" -> null
+      - users = [
+          - "dev-ci",
+        ] -> null
+    }
+
+  # module.iam.aws_iam_group_policy.no_permissions_group_group_policy will be destroyed
+  - resource "aws_iam_group_policy" "no_permissions_group_group_policy" {
+      - group  = "dev-ci-no-permissions-group" -> null
+      - id     = "dev-ci-no-permissions-group:dev-ci-group-policy" -> null
+      - name   = "dev-ci-group-policy" -> null
+      - policy = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action   = "sts:AssumeRole"
+                      - Effect   = "Allow"
+                      - Resource = "arn:aws:iam::414396067106:role/dev-ci"
+                      - Sid      = ""
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+    }
+
+  # module.iam.aws_iam_role.role will be destroyed
+  - resource "aws_iam_role" "role" {
+      - arn                   = "arn:aws:iam::414396067106:role/dev-ci" -> null
+      - assume_role_policy    = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action    = "sts:AssumeRole"
+                      - Condition = {
+                          - Bool = {
+                              - "aws:MultiFactorAuthPresent" = "true"
+                            }
+                        }
+                      - Effect    = "Allow"
+                      - Principal = {
+                          - AWS = "arn:aws:iam::414396067106:root"
+                        }
+                      - Sid       = ""
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - create_date           = "2022-06-26T12:44:04Z" -> null
+      - force_detach_policies = false -> null
+      - id                    = "dev-ci" -> null
+      - managed_policy_arns   = [] -> null
+      - max_session_duration  = 3600 -> null
+      - name                  = "dev-ci" -> null
+      - path                  = "/" -> null
+      - tags                  = {
+          - "env"   = "dev"
+          - "owner" = "admin"
+        } -> null
+      - tags_all              = {
+          - "env"   = "dev"
+          - "owner" = "admin"
+        } -> null
+      - unique_id             = "AROAWA67OFURP6KUSL2Y7" -> null
+
+      - inline_policy {}
+    }
+
+  # module.iam.aws_iam_user.user will be destroyed
+  - resource "aws_iam_user" "user" {
+      - arn           = "arn:aws:iam::414396067106:user/dev-ci" -> null
+      - force_destroy = false -> null
+      - id            = "dev-ci" -> null
+      - name          = "dev-ci" -> null
+      - path          = "/" -> null
+      - tags          = {} -> null
+      - tags_all      = {} -> null
+      - unique_id     = "AIDAWA67OFURA56UDCEPY" -> null
+    }
+
+Plan: 0 to add, 0 to change, 5 to destroy.
+module.iam.aws_iam_group_policy.no_permissions_group_group_policy: Destroying... [id=dev-ci-no-permissions-group:dev-ci-group-policy]
+module.iam.aws_iam_group_membership.no_permissions_group_membership: Destroying... [id=dev-ci-no-perms-group-membership]
+module.iam.aws_iam_group_membership.no_permissions_group_membership: Destruction complete after 1s
+module.iam.aws_iam_group_policy.no_permissions_group_group_policy: Destruction complete after 1s
+module.iam.aws_iam_group.no_permissions_group: Destroying... [id=dev-ci-no-permissions-group]
+module.iam.aws_iam_user.user: Destroying... [id=dev-ci]
+module.iam.aws_iam_role.role: Destroying... [id=dev-ci]
+module.iam.aws_iam_group.no_permissions_group: Destruction complete after 0s
+module.iam.aws_iam_user.user: Destruction complete after 0s
+module.iam.aws_iam_role.role: Destruction complete after 0s
