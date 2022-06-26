@@ -59,12 +59,12 @@ run-nomad-job:
 
 revert-all:
 	-kind delete cluster --name bitcoin-k8s-cluster
-	-docker rm $(shell docker stop $(shell docker ps -a -q --filter ancestor=${DOCKER_IMAGE} --format="{{.ID}}"))
-	-docker rmi $(shell docker images '${DOCKER_IMAGE}' -a -q)
-	-docker rm $(shell docker stop $(shell docker ps -a -q --filter ancestor=anchore/inline-scan --format="{{.ID}}"))
-	-docker rm $(shell docker stop $(shell docker ps -a -q --filter ancestor=anchore/anchore-engine --format="{{.ID}}"))
-	-docker rmi $(shell docker images 'anchore/inline-scan' -a -q)
-	-docker rmi $(shell docker images 'anchore/anchore-engine' -a -q)
+	-docker rm $(docker stop $(docker ps -a -q --filter ancestor=${DOCKER_IMAGE} --format="{{.ID}}"))
+	-docker rmi $(docker images '${DOCKER_IMAGE}' -a -q)
+	-docker rm $(docker stop $(docker ps -a -q --filter ancestor=anchore/inline-scan --format="{{.ID}}"))
+	-docker rm $(docker stop $(docker ps -a -q --filter ancestor=anchore/anchore-engine --format="{{.ID}}"))
+	-docker rmi $(docker images 'anchore/inline-scan' -a -q)
+	-docker rmi $(docker images 'anchore/anchore-engine' -a -q)
 	-cd terraform/main && terraform destroy -auto-approve
 	-nomad stop bitcoin-core
 
