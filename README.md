@@ -1,19 +1,17 @@
-This following README presents the solutions to the take home exercise along with their respective explanations and how they can be replicated.
-
 **Readme Contents**
 
-[1 - Environment requirements](#1---Environment-requirements)  
-[2 - Project file structure](#2---Project-file-structure)  
+[1 - Versions of Software used](#1---Versions-of-Software-used)  
+[2 - Project Directory structure](#2---Project-Directory-structure)  
 [3 - Solutions](#3---Solutions)  
 [4 - Cleanup](#4---Cleanup)  
 
 ## 1 - Versions of Software used
 
 To test the solutions Linux is recommended.   
-*Please note though that this solution was tested using Linux Fedora 36*
+*Please note though that this solutions were tested using Linux Fedora 36*
 
 
-| Name | Version |
+| Tool | Version |
 | --- | --- |
 | [Docker](https://hub.docker.com/) |  20.10.17 |
 | [Kubectl](https://kubernetes.io/docs/tasks/tools/) | 1.24.2 |
@@ -33,27 +31,26 @@ To test the solutions Linux is recommended.
 ## 2 - Project file structure
 Here we present the directory structure of the project.
 
-bitcoin-core-service       <-- Project's root
-├── anchore-reports        <-- Question 1 ( security scan reports )
-├── Dockerfile             <-- Question 1 ( build the bitcoin-core image )
-├── .github                <-- Question 3 ( Github Actions workflows for CI/CD )
-├── images                 <-- Question 3 ( Screenshot for the README.md )
-├── kind-resources         <-- Question 2 ( Kind cluster sample config. )
-├── kubernetes-resources   <-- Question 2 ( Kubernetes manifest files )
-├── Makefile               <-- Makefile of the project
-├── nomad-resources        <-- Question 7  ( Nomad job file )
-├── README.md              <-- Project's README.md file
-├── terraform              <-- Question 6 ( Terraform HCL files )
-└── webserver-log          <-- Questions 4 & 5 ( Scripts )
+**bitcoin-core-service**       <-- Project's root
+**├── anchore-reports**        <-- Question 1 ( security scan reports )
+**├── Dockerfile**             <-- Question 1 ( build the bitcoin-core image )
+**├── .github**                <-- Question 3 ( Github Actions workflows for CI/CD )
+**├── images**                 <-- Question 3 ( Screenshot for the README.md )
+**├── kind-resources**         <-- Question 2 ( Kind cluster sample config. )
+**├── kubernetes-resources**   <-- Question 2 ( Kubernetes manifest files )
+**├── Makefile**               <-- Makefile of the project
+**├── nomad-resources**        <-- Question 7  ( Nomad job file )
+**├── README.md**              <-- Project's README.md file
+**├── terraform**              <-- Question 6 ( Terraform HCL files )
+**└── webserver-log**          <-- Questions 4 & 5 ( Scripts )
 
 
 
 ## 3 - Solutions
-*Note: A make file is being used which can be found under the root of the project to ease the execution of each solution.  
-All commands are meant to be run from the project's root.
-For the full list of commands run: `make help`.*
+*A make file is being used which can be found under the root of the project to ease the execution of each solution.  
+All commands are meant to be run from the project's root. For the full list of commands run: `make help`.*
 ### 3.1 - Question 1: Docker-ayes
-This Dockerfile utilizes the Docker multi stage build. This approach helped building the container faster locally, since it does always download all the parts. Moreover to achieve security Google's [Distroless-nonroot](https://github.com/GoogleContainerTools/distroless) image is used, which is based on Debian Linux. This specific image reduces the attack surface of the container by not including most parts of a standard container image. It provides the bare minimum and users are able to use only the very essentials to run an application.
+This Dockerfile utilizes the Docker multi stage build. This approach helped building the container faster locally, since it doesn't always download all the parts. Moreover to achieve security Google's [Distroless-nonroot](https://github.com/GoogleContainerTools/distroless) image is used, which is based on Debian Linux. This specific image reduces the attack surface of the container by not including most parts of a standard Linux system (not even shell). It provides the bare minimum so users are able to use only the very essentials to run an application.
 
 The following links used as reference to create the Dockerfile:
 https://github.com/kylemanna/docker-bitcoind/blob/master/Dockerfile
@@ -80,14 +77,14 @@ The results of the scan are automatically stored under `anchore-reports` in the 
 
 ### 3.2 - Question 2: k8s FTW
 #### 3.2.1 - A local cluster
-For fast testing of this solution we use [Kind](https://kind.sigs.k8s.io) which creates a K8s cluster using docker containers as nodes.
+For fast testing of this part we use [Kind](https://kind.sigs.k8s.io) which creates a K8s cluster using docker containers as nodes.
 It provides for a very lightweight and simple solution than running a full VM on Linux using this [configuration](https://github.com/kubernetes-sigs/kind/blob/main/site/content/docs/user/kind-example-config.yaml). 
 
-*Note: kind has some limitations as its not a full fledged cluster, for more standard testing a proper K8s cluster must be used.*
+*Note: Kind has some limitations as its not a fully fledged cluster. For a more standard testing a proper K8s cluster must be used.*
 
 #### 3.2.1 - The manifests
 The Kubernetes manifests which create all the required objects can be found under  `kubernetes-resources`.  
-Each Object has its own filename for better visibility of what is deployed.  Note that we do not have a StorageClass manifest. This is because we are going to use the `standard` StorageClass that comes baked in with the Kind Kubernetes cluster. 
+Each Object is defined in its own filename for better separation of what is deployed.  Note that we do not have a StorageClass manifest. This is because we are going to use the `standard` StorageClass that comes baked in with the Kind Kubernetes cluster. 
 PV and PVC are not required when using Kind since the statefulset being used has the field `volumeClaimTemplates:` (line 41 in 2-statefulset.yaml) and provides all the functionality we need, i.e. creation of PVC and PV that uses the existing `standard` storage class. This storage class is replaced when we deploy it on a proper Kubernetes cluster ( depending on the provider - each one has different StorageClass names )
 #### 3.2.2 - Execution steps
 
@@ -111,7 +108,7 @@ For this we are using `anchor` and it comes nicely package in a container.
 3. Pushes the container image to Dockerhub
 4. Applies the Kubernetes manifests to DigitalOcean Kubernetes cluster.
 
-The concept here is, that merging to `main` branch,  triggers an automated production deployment since the DEV and QA stages have previously been GREEN.  
+The concept here is, that merging to `main` branch,  triggers an automated deployment after a push has be made.  
 
 For the Github Actions output log please look at the following images. 
 ![Successful_CI_Run](images/ci-successful-run.png)
@@ -210,10 +207,10 @@ Under the `terraform` directory we see the following:
 | terraform/modules/iam | IAM module resource files |
 | terraform/\*outputs\*.log | example outputs of successful runs |
 
-For a more detailed explanation on how the terraform code works please look at the inline comments.
+Inline comments provide a more detailed explanation on how the terraform code works.
 *Note: Credentials are located under `~/.aws/credentials`
 
-To create the IAM resources run:
+To apply the Terraform configuration please run the following:
 ```bash
 make run-terraform
 ```
@@ -243,7 +240,7 @@ make run-nomad-job
 
 ### 3.8 - Cleanup
 
-To remove all the resources build from the above sections, from within the project root run:
+In order to cleanup all changes from previous step you can run:
 ```
 make cleanup
 ```
