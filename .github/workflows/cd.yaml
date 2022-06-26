@@ -1,0 +1,29 @@
+name: cd
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - kubernetes-resources
+jobs:
+  deploy-to-dok8s:
+    name: Deploy manifests to Kubernetes Digital Ocean
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      # Set up the Kubernetes CLI with your DigitalOcean Kubernetes cluster.
+      - name: Set up kubectl
+        uses: matootie/dokube@v1.4.0
+        with:
+          personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
+          clusterName: bitcoin-service-k8s
+
+      # Run any kubectl commands you want!
+      - name: Change Storage class to be DigitalOcean comatible
+        run: sed -i 's/standard/do-block-storage/g' kubernetes-resources/2-statefulset.yaml
+      
+      # Deploy to K8s cluster
+      - name: Deploy manifests to DigitalOcean K8s cluster
+        run: kubectl apply -f kubernetes-resources/
