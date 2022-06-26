@@ -13,6 +13,8 @@ help:
 	@echo "  kind-delete         to delete the Kind cluster."
 	@echo "  script-kiddies		 script to count ip frequency in a log file"
 	@echo "  script-grownups	 python script to count ip frequency in a log file"
+	@echo "  run-terraform		 initialize, plan and apply terraform IAM"
+	@echo "  revert-all			 destroys cahnges"
 
 build-image:
 	docker build -t ${DOCKER_IMAGE} .
@@ -47,6 +49,9 @@ script-grownups:
 	cat webserver-log/sample-web-log.log | cut -d " " -f2 | sort | uniq -c | sort -nr
 	cd webserver-log && python3 ip-freq.py sample-web-log.log
 
+run-terraform:
+	cd terraform/main && terraform init && terraform plan && terraform apply -auto-approve
+
 
 revert-all:
 	-kind delete cluster --name bitcoin-k8s-cluster
@@ -56,6 +61,7 @@ revert-all:
 	-docker rm $(shell docker stop $(shell docker ps -a -q --filter ancestor=anchore/anchore-engine --format="{{.ID}}"))
 	-docker rmi $(shell docker images 'anchore/inline-scan' -a -q)
 	-docker rmi $(shell docker images 'anchore/anchore-engine' -a -q)
+	-cd terraform/main && terraform destroy -auto-approve
 
 
 .PHONY: \
