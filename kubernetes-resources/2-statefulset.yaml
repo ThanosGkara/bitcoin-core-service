@@ -17,7 +17,7 @@ spec:
       labels: *bitcoin-labels
     spec:
       serviceAccountName: bitcoin-core
-      securityContext: # Distroless:nonroot uid:gid
+      securityContext: # Distroless nonroot user uid:gid
         runAsUser: 65532
         fsGroup: 65532
       dnsConfig:
