@@ -14,6 +14,7 @@ help:
 	@echo "  script-kiddies		 script to count ip frequency in a log file"
 	@echo "  script-grownups	 python script to count ip frequency in a log file"
 	@echo "  run-terraform		 initialize, plan and apply terraform IAM"
+	@echo "  run-nomad-job		 run job on nomad"
 	@echo "  revert-all			 destroys cahnges"
 
 build-image:
@@ -52,6 +53,9 @@ script-grownups:
 run-terraform:
 	cd terraform/main && terraform init && terraform plan && terraform apply -auto-approve
 
+run-nomad-job:
+	nomad run nomad-resources/bitcoin-core.nomad
+
 
 revert-all:
 	-kind delete cluster --name bitcoin-k8s-cluster
@@ -62,6 +66,7 @@ revert-all:
 	-docker rmi $(shell docker images 'anchore/inline-scan' -a -q)
 	-docker rmi $(shell docker images 'anchore/anchore-engine' -a -q)
 	-cd terraform/main && terraform destroy -auto-approve
+	-nomad stop bitcoin-core
 
 
 .PHONY: \
