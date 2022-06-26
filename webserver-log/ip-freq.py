@@ -14,13 +14,14 @@ def main():
     file_to_open = sys.argv[1]
     ip_freq = {}
 
+    # Calculate the number of ips frequency iside the log file
     with open(file_to_open, encoding = 'utf-8') as f:
         while True:
-            line = f.readline()
+            line = f.readline() # Read the file line by line
             if not line:
                 break
             else:
-                ip = line.split(' ')[1]
+                ip = line.split(' ')[1] # split each line and the the ip
                 if ip in ip_freq.keys():
                     ip_freq[ip] += 1
                 else:

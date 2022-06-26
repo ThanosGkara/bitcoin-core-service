@@ -17,9 +17,9 @@ fi
 # https://stackoverflow.com/questions/1494178/how-to-define-hash-tables-in-bash
 # https://www.xmodulo.com/key-value-dictionary-bash.html
 
-declare -A ip_freq
+declare -A ip_freq # Create the hash table ( dict equivalent )
 
-for line in $(cat $1 | cut -d " " -f2)
+for line in $(cat $1 | cut -d " " -f2) 
 do
     if [ -v ip_freq[$line] ]; then
         ip_freq[$line]=$((ip_freq[$line] + 1))
@@ -29,7 +29,7 @@ do
     fi
 done
 
-for ip in "${!ip_freq[@]}"; do
+for ip in "${!ip_freq[@]}"; do  
     echo "${ip_freq[$ip]} $ip" 
-done | sort -gr
+done | sort -gr # Print the final table sorted descending
 
