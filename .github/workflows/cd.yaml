@@ -10,6 +10,7 @@ jobs:
     name: Deploy manifests to Kubernetes Digital Ocean
     runs-on: "ubuntu-latest"
     steps:
+      # Checkout the projects code
       - name: Check out the repo
         uses: actions/checkout@v2
 

@@ -15,7 +15,7 @@ help:
 	@echo "  script-grownups	 python script to count ip frequency in a log file"
 	@echo "  run-terraform		 initialize, plan and apply terraform IAM"
 	@echo "  run-nomad-job		 run job on nomad"
-	@echo "  revert-all			 destroys cahnges"
+	@echo "  cleanup			 destroys cahnges"
 
 build-image:
 	docker build -t ${DOCKER_IMAGE} .
@@ -57,7 +57,7 @@ run-nomad-job:
 	nomad run nomad-resources/bitcoin-core.nomad
 
 
-revert-all:
+cleanup:
 	-kind delete cluster --name bitcoin-k8s-cluster
 	-docker rm $(docker stop $(docker ps -a -q --filter ancestor=${DOCKER_IMAGE} --format="{{.ID}}"))
 	-docker rmi $(docker images '${DOCKER_IMAGE}' -a -q)

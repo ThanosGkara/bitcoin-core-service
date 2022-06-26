@@ -5,14 +5,12 @@ This following README presents the solutions to the take home exercise along wit
 [1 - Environment requirements](#1---Environment-requirements)  
 [2 - Project file structure](#2---Project-file-structure)  
 [3 - Solutions](#3---Solutions)  
-[4 - Revert all](#4---Revert-all)  
+[4 - Cleanup](#4---Cleanup)  
 
 ## 1 - Versions of Software used
 
 To test the solutions Linux is recommended.   
 *Please note though that this solution was tested using Linux Fedora 36*
-
-The following tools/languages/OSs were used to complete this exercise. They are listed below along with the versions used.
 
 
 | Name | Version |
@@ -33,17 +31,20 @@ The following tools/languages/OSs were used to complete this exercise. They are 
 
 
 ## 2 - Project file structure
-Bellow you can have a preview of structure used in this project and each directory is used for
+Here we present the directory structure of the project.
 
-| Directory/file | Description |
-| --- | --- |
-| Dockerfile | Question 1 solution (Dockerfile) |
-| anchor-reports | Question 1 solution (Anchore scan reports) |
-| kubernetes-resources | Question 2 solution |
-| .github/workflows | Question 3 solution |
-| webserver-log | Questions 4 and 5 solutions |
-| terraform | Question 6 solution |
-| nomad-resources | Question 7 solution |
+bitcoin-core-service       <-- Project's root
+├── anchore-reports        <-- Question 1 ( security scan reports )
+├── Dockerfile             <-- Question 1 ( build the bitcoin-core image )
+├── .github                <-- Question 3 ( Github Actions workflows for CI/CD )
+├── images                 <-- Question 3 ( Screenshot for the README.md )
+├── kind-resources         <-- Question 2 ( Kind cluster sample config. )
+├── kubernetes-resources   <-- Question 2 ( Kubernetes manifest files )
+├── Makefile               <-- Makefile of the project
+├── nomad-resources        <-- Question 7  ( Nomad job file )
+├── README.md              <-- Project's README.md file
+├── terraform              <-- Question 6 ( Terraform HCL files )
+└── webserver-log          <-- Questions 4 & 5 ( Scripts )
 
 
 
@@ -112,15 +113,15 @@ For this we are using `anchor` and it comes nicely package in a container.
 
 The concept here is, that merging to `main` branch,  triggers an automated production deployment since the DEV and QA stages have previously been GREEN.  
 
-For the Github Actions output log please look at [Actions Tab](https://github.com/ThanosGkara/bitcoin-core-service/actions). 
+For the Github Actions output log please look at the following images. 
 ![Successful_CI_Run](images/ci-successful-run.png)
 ![Successful_CD_Run](images/cd-successful-run.png)
 
 Further optimization would be: 
 - rum e2e and smokes as the production deployment occurs.  
 - Have a canary deployment to switch only a % of traffic to the new version.  
-- Have a revert stage at the end of the pipeline if the e2e, and smoke tests fail after deployment.  
-
+- Have a revert stage at the end of the pipeline if the e2e, and smoke tests fail after deployment.
+  
 ### 3.4 - Question 4: Script kiddies
 At this stage we used the provided output to create a larger `webserver-log/sample-web-log.log`. We tried to put some random IP addresses
 to satisfy the purpose of this part.
@@ -225,9 +226,11 @@ The job file can be found `nomad-resources/bitcoin-core.nomad`
 #### Environment setup
 We used as local Nomad agent running in dev mode. 
 ```bash
-nomad agent -dev -bind 127.0.0.1 -log-level DEBUG
+nomad agent -dev -bind 0.0.0.0 -log-level INFO
 ```
-*Note: We didn't use Consul so the parts of the job that expose a service ( lines 47-136 ) cannot be used in this case.
+```bash
+consul agent -dev -node machine
+```
 *Note: The volume mounts cannot be used unless we provide a volume to utilized by Nomad.
 
 #### Nomad Job
@@ -238,9 +241,9 @@ To run the Nomad job use the following command:
 make run-nomad-job
 ```
 
-### 3.8 - Revert all
+### 3.8 - Cleanup
 
 To remove all the resources build from the above sections, from within the project root run:
 ```
-make revert-all
+make cleanup
 ```

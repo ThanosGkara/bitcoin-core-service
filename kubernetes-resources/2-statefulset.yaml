@@ -25,7 +25,7 @@ spec:
           - name: ndots # syscall will try to resolve an absolute name
             value: "1"
       containers:
-        - name: bitcoind
+        - name: bitcoin-core
           image: docker.io/thanosgkara/bitcoin-core-service:22.0
           imagePullPolicy: Always
           volumeMounts:
