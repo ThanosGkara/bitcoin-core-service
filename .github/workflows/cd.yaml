@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - kubernetes-resources
+      - 'kubernetes-resources/**'
 jobs:
   deploy-to-dok8s:
     name: Deploy manifests to Kubernetes Digital Ocean
