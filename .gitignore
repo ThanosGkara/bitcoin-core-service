@@ -1,1 +1,3 @@
 .vscode/*
+# Local .terraform directories
+**/.terraform/*
